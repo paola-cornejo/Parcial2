@@ -1,25 +1,20 @@
-
-<?php 
+<?php
 session_start();
 //print_r($_SESSION);
 require_once 'funciones/conexion.php';
 $MiConexion = ConexionBD();
 
-require_once 'funciones/listarMarcas.php';
-require_once 'funciones/InsertarTransporte.php';
-require_once 'funciones/validacion_registro_transporte.php';
-
-$ListaMarcas = listarMarcas($MiConexion);
-$cantidadMarcas= count($ListaMarcas);
-
+require_once 'funciones/InsertarViaje.php';
+require_once 'funciones/validacion_registro_viaje.php';
+require_once 'funciones/ListarChofer.php';
 
 $Mensaje='';
 $Estilo='warning';
 if (!empty($_POST['BotonRegistrar'])) {
   //estoy en condiciones de poder validar los datos
-  $Mensaje=validacion_registro_transporte();  
+  $Mensaje=validacion_registro_viaje();  
   if (empty($Mensaje)) {   
-      if (InsertarTransporte($MiConexion) != false) {
+      if (InsertarViaje($MiConexion) != false) {
         $Mensaje = 'Se ha registrado correctamente.';
         $_POST = array(); 
         $Estilo = 'success'; 
@@ -27,8 +22,47 @@ if (!empty($_POST['BotonRegistrar'])) {
       }
 }
 
-echo "paso 6";
 ?>
+
+<!-- <?php 
+session_start();
+//print_r($_SESSION);
+require_once 'funciones/conexion.php';
+
+echo "Paso 0";
+
+$MiConexion = ConexionBD();
+
+// require_once 'funciones/InsertarViaje.php';
+// require_once 'funciones/validacion_registro_viaje.php';
+// require_once 'funciones/ListarChofer.php';
+
+echo "Paso 1";
+
+//$ListaChofer = ListarChofer($MiConexion);
+//$cantidadMarcas= count($ListaChofer);
+
+
+echo $ListaChofer ;
+
+// $Mensaje='';
+// $Estilo='warning';
+// if (!empty($_POST['BotonRegistrar'])) {
+//   //estoy en condiciones de poder validar los datos
+//   $Mensaje=validacion_registro_viaje();  
+//   if (empty($Mensaje)) {   
+//       if (InsertarViaje($MiConexion) != false) {
+//         $Mensaje = 'Se ha registrado correctamente.';
+//         $_POST = array(); 
+//         $Estilo = 'success'; 
+//        }         
+//       }
+// }
+
+
+
+?> -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +109,7 @@ echo "paso 6";
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.php" class="logo d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
@@ -125,7 +159,7 @@ echo "paso 6";
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="login.php">
+              <a class="dropdown-item d-flex align-items-center" href="login.html">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesion</span>
               </a>
@@ -144,7 +178,7 @@ echo "paso 6";
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php">
+        <a class="nav-link collapsed" href="index.html">
           <i class="bi bi-grid"></i>
           <span>Panel</span>
         </a>
@@ -156,15 +190,18 @@ echo "paso 6";
         </a>
         <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="camion_carga.php" class="active">
+            <a href="camion_carga.html" class="active">
             <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo transporte</span>
             </a>
           </li>
           <li>
-            <a href="chofer_carga.php" class="active">
+            <a href="chofer_carga.html" class="active">
             <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo chofer</span>
             </a>
           </li>
+
+       
+
         </ul>
       </li>
 
@@ -174,29 +211,33 @@ echo "paso 6";
         </a>
         <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="viaje_carga.php" class="active">
+            <a href="viaje_carga.html" class="active">
             <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo</span>
             </a>
           </li>
           <li>
-            <a href="viajes_listado.php" class="active">
+            <a href="viajes_listado.html" class="active">
             <i class="bi bi-layout-text-window-reverse"></i><span>Listado de viajes</span>
             </a>
           </li>
         </ul>
-      </li>    
+      </li>
+
+    
+
+    
     </ul>
 
   </aside><!-- End Sidebar-->
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Registrar un nuevo transporte</h1>
+      <h1>Registrar un nuevo viaje</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item">Transportes</li>
-          <li class="breadcrumb-item active">Carga Camión</li>
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Viajes</li>
+          <li class="breadcrumb-item active">Carga</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -204,83 +245,84 @@ echo "paso 6";
     <section class="section">
       <div class="row">
         <div class="col-lg-6">
-            <div class="card">
-              <div class="card-body">
-                  <h5 class="card-title">Ingresa los datos</h5>
-                  <?php if (!empty($Mensaje)) { ?>
-                    <div class="alert alert-<?php echo $Estilo; ?> alert-dismissable">
-                      <?php echo $Mensaje; ?>
-                    </div>
-                  <?php } ?>
+          <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Ingresa los datos</h5>
 
-                  <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
                     <i class="bi bi-info-circle me-1"></i>
                     Los campos indicados con (*) son requeridos
-                  </div> 
+                </div>
+<!--
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-1"></i>
+                    Mensajes de Alerta por validaciones
+                </div>
 
-                  <form class="row g-3" method="post">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-1"></i>
+                    Los datos se guardaron correctamente! 
+                </div>
+-->
+                <form class="row g-3">
                     <div class="col-12">
-                        <label for="selector" class="form-label">Marca (*)</label>
-                        <select class="form-select" aria-label="Selector" id="selector" name="Marca">
-                          <option selected="">Selecciona una opción</option>  
-
-                          <?php                       
-
-                          $selected='';
-                          for($i=0; $i<$cantidadMarcas; $i++ ) {
-                              if(!empty ($_POST['Marca']) && $_POST['Marca'] == $ListaMarcas[$i]['ID']){
-                                  $selected = 'selected';
-                              }else{
-                                $selected = '';
-                              } ?>
-                              <option value="<?php echo $ListaMarcas[$i]['ID']; ?>" <?php echo $selected; ?>  >
-                                <?php echo $ListaMarcas[$i]['NOMBRE']; ?>
-                              </option>
-                          <?php }  ?>                         
+                        <label for="selector" class="form-label">Chofer (*)</label>
+                        <select class="form-select" aria-label="Selector" id="selector">
+                          <option selected="">Selecciona una opcion</option>
+                          <option>Perez, Juan (DNI 22333444) </option>
+                          <option>Alvarez, Marcos (DNI 33444555) </option>
+                          <option>Rodriguez, Ariel (DNI 44555666) </option>
+                          <option>Zapata, Joaquin (DNI 55666777) </option>
                         </select>
-
                     </div>
                     <div class="col-12">
-                        <label for="modelo" class="form-label">Modelo (*)</label>                 
-                        <input type="text" class="form-control" id="modelo" name="Modelo" value="<?php 
-                          //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
-                          echo !empty($_POST['Modelo']) ? $_POST['Modelo'] : ''; ?>"> 
-                    </div>
-
-                    <div class="col-12">                              
-                        <label for="año" class="form-label">Año</label>                        
-                        <input type="text" class="form-control" id="año" name="Anio" maxlength="4" value="<?php 
-                          //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
-                          echo !empty($_POST['Anio']) ? $_POST['Anio'] : ''; ?>">
+                        <label for="selector" class="form-label">Transporte (*)</label>
+                        <select class="form-select" aria-label="Selector" id="selector">
+                          <option selected="">Selecciona una opcion</option>
+                          <option>Iveco - Daily Furgon - AC206JK </option>
+                          <option>Volkswagen - Delivery - AC506AA  </option>
+                          <option>Scania - Serie P - AA322CX   </option>
+                          <option>Iveco - Daily Chasis - AD698HA </option>
+                        </select>
                     </div>
                     
                     <div class="col-12">
-                        <label for="patente" class="form-label">Patente (*)</label>
-                        <input type="text" class="form-control" id="patente" name="Patente" maxlength="7" value="<?php 
-                          //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
-                          echo !empty($_POST['Patente']) ? $_POST['Patente'] : ''; ?>">
+                        <label for="fecha" class="form-label">Fecha programada (*)</label>
+                        <input type="date" class="form-control" id="fecha">
+                    </div>
+                    <div class="col-12">
+                        <label for="selector" class="form-label">Destino (*)</label>
+                        <select class="form-select" aria-label="Selector" id="selector">
+                          <option selected="">Selecciona una opcion</option>
+                          <option>Rio Primero </option>
+                          <option>Capilla del Monte</option>
+                          <option>San Francisco  </option>
+                          <option>Morteros   </option>
+                          <option>Toledo </option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="costo" class="form-label">Costo (*)</label>
+                        <input type="text" class="form-control" id="costo">
+                    </div>
+                    <div class="col-12">
+                        <label for="porc" class="form-label">Porcentaje chofer (*)</label>
+                        <input type="text" class="form-control" id="porc">
                     </div>
 
-                    <div class="col-12">
-                        <label class="form-label">Disponibilidad</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck1" name="Disponible" value="1"
-                            <?php echo (isset($_POST['Disponible']) && $_POST['Disponible'] == '1') ? 'checked' : ''; ?>>
-                            <label class="form-check-label" for="gridCheck1"> Habilitado</label>
-                        </div>
-                    </div>
+
 
                     
 
-                    <div class="text-center">                        
-                        <button type="submit" class="btn btn-primary" value="Registrar" name="BotonRegistrar" >Registrar</button>
+                    <div class="text-center">
+                        <button class="btn btn-primary">Registrar</button>
                         <button type="reset" class="btn btn-secondary">Limpiar Campos</button>
-                        <a href="index.php" class="text-primary fw-bold">Volver al index</a>
+                        <a href="index.html" class="text-primary fw-bold">Volver al index</a>
                     </div>
-                  </form><!-- Vertical Form -->
+                </form><!-- Vertical Form -->
 
-              </div>
             </div>
+          </div>
         </div>
       </div>
     </section>

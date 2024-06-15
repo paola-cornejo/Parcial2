@@ -14,7 +14,7 @@ function ListarChofer($Conexion) {
         $i=0;
         while ($data = mysqli_fetch_array($rs)) {            
             $Listado[$i]['ID'] = $data['Id'];
-            $Listado[$i]['NOMBRE'] = $data['Nombre'];
+            $Listado[$i]['CHOFER'] = $data['Apellido'] .', '.  $data['Nombre'] .' (DNI '.$data['DNI'] . ')';
             $i++;
         } 
         //devuelvo el listado generado en el array $Listado. (Podra salir vacio o con datos)..

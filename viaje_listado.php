@@ -1,39 +1,18 @@
-<?php
+<?php 
 session_start();
 // //print_r($_SESSION);
 require_once 'funciones/conexion.php';
 $MiConexion = ConexionBD();
-//require_once 'funciones/InsertarViaje.php';
-require_once 'funciones/validacion_registro_viaje.php';
-require_once 'funciones/listarChofer.php';
-require_once 'funciones/listarTransporte.php';
-require_once 'funciones/listarDestino.php';
-require_once 'funciones/InsertarViaje.php';
+
+// require_once 'funciones/validacion_registro_viaje.php';
+// require_once 'funciones/listarChofer.php';
+// require_once 'funciones/listarTransporte.php';
+// require_once 'funciones/listarDestino.php';
+// require_once 'funciones/InsertarViaje.php';
+
+$ListadoViajes = Listar_Viajes($MiConexion);
 
 
-$ListarChofer = ListarChofer($MiConexion);
-$cantidadChofer = count($ListarChofer);
-
-$ListarTransporte = listarTransporte($MiConexion);
-$cantidadTransporte = count($ListarTransporte);
-
-
-$ListarDestino = listarDestino($MiConexion);
-$cantidadDestino = count($ListarDestino);
-
-$Mensaje='';
-$Estilo='warning';
-if (!empty($_POST['BotonRegistrar'])) {  
-  //estoy en condiciones de poder validar los datos
-  $Mensaje=validacion_registro_viaje();   
-  if (empty($Mensaje)) {  
-      if (InsertarViaje($MiConexion) != false) {   
-        $Mensaje = 'Se ha registrado correctamente.';
-        $_POST = array(); 
-        $Estilo = 'success'; 
-       }         
-      }
-}
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +55,7 @@ if (!empty($_POST['BotonRegistrar'])) {
   ======================================================== -->
 </head>
 <body>
+
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -87,11 +67,7 @@ if (!empty($_POST['BotonRegistrar'])) {
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <?php
-      echo "Sesion" . $_SESSION['Usuario_Id'];
-    ?>
-
-
+ 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
@@ -111,7 +87,7 @@ if (!empty($_POST['BotonRegistrar'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-person"></i>
                 <span>Mi perfil</span>
               </a>
@@ -121,7 +97,7 @@ if (!empty($_POST['BotonRegistrar'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-gear"></i>
                 <span>Configuraciones</span>
               </a>
@@ -173,7 +149,10 @@ if (!empty($_POST['BotonRegistrar'])) {
             <a href="chofer_carga.php" class="active">
             <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo chofer</span>
             </a>
-          </li> 
+          </li>
+
+       
+
         </ul>
       </li>
 
@@ -193,137 +172,113 @@ if (!empty($_POST['BotonRegistrar'])) {
             </a>
           </li>
         </ul>
-      </li>    
+      </li>
+
+    
+
+    
     </ul>
 
   </aside><!-- End Sidebar-->
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Registrar un nuevo viaje</h1>
+      <h1>Lista de viajes registrados</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
           <li class="breadcrumb-item">Viajes</li>
-          <li class="breadcrumb-item active">Carga</li>
+          <li class="breadcrumb-item active">Listado</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
+          
+
           <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Ingresa los datos</h5>
+              <h5 class="card-title">Viajes cargados</h5>
 
-                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="bi bi-info-circle me-1"></i>
-                    Los campos indicados con (*) son requeridos
-                </div>
-                <?php if (!empty($Mensaje)) { ?>
-                  <div class="alert alert-<?php echo $Estilo; ?> alert-dismissable">
-                    <?php echo $Mensaje; ?>
-                  </div>
-                <?php } ?>
-<!--
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <i class="bi bi-exclamation-triangle me-1"></i>
-                    Mensajes de Alerta por validaciones
-                </div>
+              <!-- Default Table -->
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha Viaje</th>
+                    <th scope="col">Destino</th>
+                    <th scope="col">Camión</th>
+                    <th scope="col">Chofer</th>
+                    <th scope="col">Costo Viaje</th>
+                    <th scope="col">Monto Chofer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-success" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Viaje realizado">
+                    <th scope="row">1</th>
+                    <td>02/06/2024</td>
+                    <td>Capilla del Monte</td>
+                    <td>Iveco - Daily Furgon - AC206JK</td>
+                    <td>Alvarez, Marcos</td>
+                    <td>$ 300.000</td>
+                    <td>$ 30.000 (10%)</td>
+                  </tr>
 
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle me-1"></i>
-                    Los datos se guardaron correctamente! 
-                </div>
--->
-                <form class="row g-3" method="post">
-                    <div class="col-12">
-                        <label for="selector" class="form-label">Chofer (*)</label>
-                        <select class="form-select" aria-label="Selector" id="selector" name="Chofer">
-                          <option selected="">Selecciona una opción</option>  
-                          <?php                 
-                          $selected='';
-                          for($i=0; $i<$cantidadChofer; $i++ ) {
-                              if(!empty ($_POST['Chofer']) && $_POST['Chofer'] == $ListarChofer[$i]['ID']){
-                                  $selected = 'selected';
-                              }else{
-                                $selected = '';
-                              } ?>
-                              <option value="<?php echo $ListarChofer[$i]['ID']; ?>" <?php echo $selected; ?>  >
-                                <?php echo $ListarChofer[$i]['CHOFER']; ?>
-                              </option>
-                          <?php }  ?>                         
-                        </select>
-                    </div>
-                    
-                    <div class="col-12">
-                        <label for="selector" class="form-label">Transporte (*)</label>
-                        <select class="form-select" aria-label="Selector" id="selector" name="Transporte">
-                          <option selected="">Selecciona una opción</option>  
-                          <?php                      
-                          $selected='';
-                          for($i=0; $i<$cantidadTransporte; $i++ ) {
-                              if(!empty ($_POST['Transporte']) && $_POST['Transporte'] == $ListarTransporte[$i]['ID']){
-                                  $selected = 'selected';
-                                }else{
-                                $selected = '';
-                                } ?>
-                                <option value="<?php echo $ListarTransporte[$i]['ID']; ?>" <?php echo $selected; ?>  >
-                                  <?php echo $ListarTransporte[$i]['Modelo']; ?>
-                                </option>
-                          <?php }  ?>                         
-                        </select>
-                    </div>
-                    
-                    <div class="col-12">
-                        <label for="fecha" class="form-label">Fecha programada (*)</label>
-                        <input type="date" class="form-control" id="fecha" name = "FechaPautada">
-                    </div>
+                  <tr class="table-danger" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Viaje de hoy">
+                    <th scope="row">2</th>
+                    <td>03/06/2024</td>
+                    <td>Morteros</td>
+                    <td>Scania - Serie P - AA322CX</td>
+                    <td>Rodriguez, Ariel</td>
+                    <td>$ 100.000</td>
+                    <td>$ 15.000 (15%)</td>
+                  </tr>
 
-                    <div class="col-12">
-                        <label for="selector" class="form-label">Destino (*)</label>
-                        <select class="form-select" aria-label="Selector" id="selector" name="Destino">
-                          <option selected="">Selecciona una opción</option>  
-                          <?php                 
-                          $selected='';
-                          for($i=0; $i<$cantidadDestino; $i++ ) {
-                              if(!empty ($_POST['Destino']) && $_POST['Destino'] == $ListarDestino[$i]['ID']){
-                                  $selected = 'selected';
-                              }else{
-                                $selected = '';
-                              } ?>
-                              <option value="<?php echo $ListarDestino[$i]['ID']; ?>" <?php echo $selected;?>>
-                                <?php echo $ListarDestino[$i]['Destino']; ?>
-                              </option>
-                          <?php }  ?>                         
-                        </select>
-                    </div>
+                  <tr  class="table-danger" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Viaje de hoy">
+                    <th scope="row">3</th>
+                    <td>03/06/2024</td>
+                    <td>Toledo</td>
+                    <td>Iveco - Daily Chasis - AD698HA</td>
+                    <td>Zapata, Joaquin </td>
+                    <td>$ 250.000</td>
+                    <td>$ 25.000 (10%)</td>
+                  </tr>
+
+                  <tr class="table-warning" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Viaje de mañana">
+                    <th scope="row">4</th>
+                    <td>04/06/2024</td>
+                    <td>Capilla del Monte</td>
+                    <td>Scania - Serie P - AA322CX</td>
+                    <td>Perez, Juan </td>
+                    <td>$ 350.000</td>
+                    <td>$ 70.000 (20%)</td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>10/06/2024</td>
+                    <td>Capilla del Monte</td>
+                    <td>Scania - Serie P - AA322CX</td>
+                    <td>Perez, Juan </td>
+                    <td>$ 350.000</td>
+                    <td>$ 70.000 (20%)</td>
+                  </tr>
 
 
-                    <div class="col-12">
-                        <label for="costo" class="form-label">Costo (*)</label>
-                        <input type="text" class="form-control" id="costo" name="Costo" value="<?php 
-                          //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
-                          echo !empty($_POST['Costo']) ? $_POST['Costo'] : ''; ?>"> 
-                    </div>
-                    <div class="col-12">
-                        <label for="porc" class="form-label">Porcentaje chofer (*)</label>
-                        <input type="text" class="form-control" id="porc" name = "PorcentajeChofer" value="<?php 
-                          //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
-                          echo !empty($_POST['PorcentajeChofer']) ? $_POST['PorcentajeChofer'] : '';?>"> 
-                    </div>                    
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
 
-                    <div class="text-center">
-                    <button type="submit" class="btn btn-primary" value="Registrar" name="BotonRegistrar" >Registrar</button>
-                        <button type="reset" class="btn btn-secondary">Limpiar Campos</button>
-                        <a href="index.php" class="text-primary fw-bold">Volver al index</a>
-                    </div>
-                </form><!-- Vertical Form -->
-
+              
             </div>
           </div>
         </div>
+
+ 
+
+        
       </div>
     </section>
 

@@ -3,16 +3,10 @@ session_start();
 // //print_r($_SESSION);
 require_once 'funciones/conexion.php';
 
-setlocale(LC_TIME, 'es_ES.UTF-8');
-
-
 $MiConexion = ConexionBD();
 
-// require_once 'funciones/validacion_registro_viaje.php';
-// require_once 'funciones/listarChofer.php';
-// require_once 'funciones/listarTransporte.php';
-// require_once 'funciones/listarDestino.php';
 require_once 'funciones/Listar_Viajes.php';
+require_once 'funciones/ObtenerEstilo.php';
 
 $ListadoViajes = Listar_Viajes($MiConexion);
 $CantidadViajes = count($ListadoViajes);
@@ -248,15 +242,21 @@ $CantidadViajes = count($ListadoViajes);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php for ($i=0; $i<$CantidadViajes; $i++) { ?>
-                          
-                          <tr class="table-success" 
+                        <?php for ($i=0; $i<$CantidadViajes; $i++) {
+                          ?>
+                           <tr class="table-<?php echo ObtenerEstilo($ListadoViajes[$i]['fechaviaje']) ?>"
                             data-bs-toggle="tooltip" 
                             data-bs-placement="left" 
                             data-bs-original-title="Viaje realizado">
 
-                                <th scope="row"><?php echo $i+1?></th>
-                                <td><?php echo $ListadoViajes[$i]['fechaviaje']; ?></td>
+                                <th scope="row"><?php echo $i+1?></th>                                
+                                 <td><?php 
+                                  $formatter = new IntlDateFormatter($locale, IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+                                  $formatter->setPattern('EEEE, d ' . "'de'" . ' MMMM ' . "'de'" . ' yyyy');
+                                  $fechaEnEspanol = $formatter->format($ListadoViajes[$i]['fechaviaje']);
+                                  echo $fechaEnEspanol
+                                         ?></td>
+                                
                                 <td><?php echo $ListadoViajes[$i]['destino']; ?></td>
                                 <td><?php echo $ListadoViajes[$i]['camion']; ?></td>
                                 <td><?php echo $ListadoViajes[$i]['chofer']; ?></td>

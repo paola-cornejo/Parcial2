@@ -13,20 +13,10 @@ $SQL="SELECT U.Id, U.Nombre, U.Apellido, U.IdNivel, U.Imagen, U.Activo, N.Denomi
      WHERE U.Usuario ='$vUsuario' AND Clave = '$vClave'
      AND U.IdNivel = N.IdNivel ";
 
-
-    echo "Paso1";
-
     $rs = mysqli_query($vConexion, $SQL);
-        
-    echo "Paso2";
-
     $data = mysqli_fetch_array($rs) ;
 
-    echo "Paso3";
-
-    if (!empty($data)) {
-
-        echo "Paso4";
+    if (!empty($data)) {   
 
         $Usuario['ID'] = $data['Id'];
         $Usuario['NOMBRE'] = $data['Nombre'];
@@ -36,21 +26,8 @@ $SQL="SELECT U.Id, U.Nombre, U.Apellido, U.IdNivel, U.Imagen, U.Activo, N.Denomi
         $Usuario['CLAVE'] = $data['Clave'];
         $Usuario['ACTIVO'] = $data['Activo'];
         $Usuario['IDNIVEL'] = $data['IdNivel'];
-        $Usuario['IMAGEN'] = $data['Imagen'];
+        $Usuario['IMAGEN'] = $data['Imagen'];  
         
-        // switch ($data['Sexo']) {
-        //     case 'F':
-        //         $Usuario['SALUDO'] = 'Bienvenida';
-        //         break;
-        //     case 'M':
-        //         $Usuario['SALUDO'] = 'Bienvenido';
-        //         break;
-        //     case 'O':
-        //         $Usuario['SALUDO'] = 'Hola ';
-        //         break;
-        // }
-        
-
         // if (empty( $data['Imagen'])) {
         //     $data['Imagen'] = 'user.png'; 
         // }
@@ -58,10 +35,7 @@ $SQL="SELECT U.Id, U.Nombre, U.Apellido, U.IdNivel, U.Imagen, U.Activo, N.Denomi
         // $Usuario['ACTIVO'] = $data['Activo'];
         //agregados        
         // $Usuario['NOMBRE_NIVEL'] = $data['NombreNivel'];
-        echo "Paso5";
     }
-
-    echo "Paso final";
     return $Usuario;
 }
 

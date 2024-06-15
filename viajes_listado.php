@@ -2,16 +2,20 @@
 session_start();
 // //print_r($_SESSION);
 require_once 'funciones/conexion.php';
+
+setlocale(LC_TIME, 'es_ES.UTF-8');
+
+
 $MiConexion = ConexionBD();
 
 // require_once 'funciones/validacion_registro_viaje.php';
 // require_once 'funciones/listarChofer.php';
 // require_once 'funciones/listarTransporte.php';
 // require_once 'funciones/listarDestino.php';
-// require_once 'funciones/InsertarViaje.php';
+require_once 'funciones/Listar_Viajes.php';
 
 $ListadoViajes = Listar_Viajes($MiConexion);
-
+$CantidadViajes = count($ListadoViajes);
 
 ?>
 
@@ -56,6 +60,7 @@ $ListadoViajes = Listar_Viajes($MiConexion);
 </head>
 <body>
 
+
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -66,7 +71,6 @@ $ListadoViajes = Listar_Viajes($MiConexion);
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
  
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -202,74 +206,77 @@ $ListadoViajes = Listar_Viajes($MiConexion);
             <div class="card-body">
               <h5 class="card-title">Viajes cargados</h5>
 
+
+              <!-- Nivel Admin
+                Ve el listado completo, todas sus columnas
+
+                Nivel Operadores
+                Del listado podrá ver todas las columnas, menos la de “Monto Chofer”
+
+                Nivel Choferes
+                Del listado podrá ver todas las columnas, menos la de “Costo viaje”. 
+                “Monto Chofer” no debe ver el porcentaje (10%, 15%, etc), solo verá el monto en pesos. -->
+
               <!-- Default Table -->
               <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Fecha Viaje</th>
-                    <th scope="col">Destino</th>
-                    <th scope="col">Camión</th>
-                    <th scope="col">Chofer</th>
-                    <th scope="col">Costo Viaje</th>
-                    <th scope="col">Monto Chofer</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="table-success" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Viaje realizado">
-                    <th scope="row">1</th>
-                    <td>02/06/2024</td>
-                    <td>Capilla del Monte</td>
-                    <td>Iveco - Daily Furgon - AC206JK</td>
-                    <td>Alvarez, Marcos</td>
-                    <td>$ 300.000</td>
-                    <td>$ 30.000 (10%)</td>
-                  </tr>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Fecha Viaje</th>
+                            <th scope="col">Destino</th>
+                            <th scope="col">Camión</th>
+                            <th scope="col">Chofer</th>
+                            <!-- admin -->
+                            <?php if ($_SESSION['Usuario_Nivel'] == 1 ) {
+                                    ?>                                   
+                                    <th>Costo Viaje</th>                     
+                                    <th>Monto Chofer</th>                                                
+                                <?php } ?>
+                                <!-- operador -->
+                            <?php if ($_SESSION['Usuario_Nivel'] == 2 ) {
+                                    ?> 
+                                    <th>Costo Viaje</th>
+                                <?php } ?>
+                                <!-- chofer -->
+                            <?php if ($_SESSION['Usuario_Nivel'] == 3 ) {
+                                    ?> 
+                                    <th>Monto Chofer</th>
+                                <?php } ?>
 
-                  <tr class="table-danger" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Viaje de hoy">
-                    <th scope="row">2</th>
-                    <td>03/06/2024</td>
-                    <td>Morteros</td>
-                    <td>Scania - Serie P - AA322CX</td>
-                    <td>Rodriguez, Ariel</td>
-                    <td>$ 100.000</td>
-                    <td>$ 15.000 (15%)</td>
-                  </tr>
+                            
 
-                  <tr  class="table-danger" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Viaje de hoy">
-                    <th scope="row">3</th>
-                    <td>03/06/2024</td>
-                    <td>Toledo</td>
-                    <td>Iveco - Daily Chasis - AD698HA</td>
-                    <td>Zapata, Joaquin </td>
-                    <td>$ 250.000</td>
-                    <td>$ 25.000 (10%)</td>
-                  </tr>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php for ($i=0; $i<$CantidadViajes; $i++) { ?>
+                          
+                          <tr class="table-success" 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="left" 
+                            data-bs-original-title="Viaje realizado">
 
-                  <tr class="table-warning" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Viaje de mañana">
-                    <th scope="row">4</th>
-                    <td>04/06/2024</td>
-                    <td>Capilla del Monte</td>
-                    <td>Scania - Serie P - AA322CX</td>
-                    <td>Perez, Juan </td>
-                    <td>$ 350.000</td>
-                    <td>$ 70.000 (20%)</td>
-                  </tr>
+                                <th scope="row"><?php echo $i+1?></th>
+                                <td><?php echo $ListadoViajes[$i]['fechaviaje']; ?></td>
+                                <td><?php echo $ListadoViajes[$i]['destino']; ?></td>
+                                <td><?php echo $ListadoViajes[$i]['camion']; ?></td>
+                                <td><?php echo $ListadoViajes[$i]['chofer']; ?></td>
+                            
+                                <?php if ($_SESSION['Usuario_Nivel'] == 1 ) { ?>
+                                    <td>$ <?php echo $ListadoViajes[$i]['costoviaje']; ?></td>
+                                    <td>$ <?php echo $ListadoViajes[$i]['montochoferConporcentaje']; ?></td>
+                                <?php } ?>
 
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>10/06/2024</td>
-                    <td>Capilla del Monte</td>
-                    <td>Scania - Serie P - AA322CX</td>
-                    <td>Perez, Juan </td>
-                    <td>$ 350.000</td>
-                    <td>$ 70.000 (20%)</td>
-                  </tr>
+                                <?php if ($_SESSION['Usuario_Nivel'] == 2 ) { ?>
+                                    <td>$ <?php echo $ListadoViajes[$i]['costoviaje']; ?></td>                                                
+                                <?php } ?>
 
-
-                </tbody>
-              </table>
-              <!-- End Default Table Example -->
+                                <?php if ($_SESSION['Usuario_Nivel'] == 3 ) { ?>
+                                    <td>$ <?php echo $ListadoViajes[$i]['montochoferSinporcentaje']; ?></td>                                                
+                                <?php } ?>
+                            </tr>  
+                        <?php } ?>
+                    </tbody>
+                </table>
 
               
             </div>

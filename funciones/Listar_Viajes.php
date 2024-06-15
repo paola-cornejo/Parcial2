@@ -5,20 +5,50 @@ function Listar_Viajes($vConexion) {
 
       //1) genero la consulta que deseo
         // $SQL = "SELECT IdMarca as Id, Denominacion as Nombre FROM marcas ORDER BY Denominacion";
-        $SQL = "SELECT t.*, m.Denominacion as Marca 
-        FROM transportes t
-        INNER join marcas m on m.IdMarca = t.IdMarca
-        ORDER BY t.modelo ASC";
+        $SQL = "SELECT v.fechapautada as fechaviaje , 
+                d.denominacion as destino
+                , concat(m.denominacion , ' - ' , t.modelo , ' - ', t.patente) as camion,
+                concat(u.apellido, ', ', u.nombre) as chofer,
+                v.costo as costoviaje,                
+                (v.costo * v.porcentajechofer) / 100 as montochofer,
+                v.porcentajechofer 
+                FROM viajes v
+                INNER JOIN destinos d on d.iddestino = v.iddestino
+                INNER JOIN transportes t on t.idtransporte = v.idtransporte
+                INNER JOIN usuarios u on u.id = v.idusuariochofer
+                INNER JOIN marcas m on m.idmarca = t.idmarca
+                ORDER BY v.fechapautada ASC, d.denominacion ASC
+                ;";                
 
         //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs es el cto de resultados
         $rs = mysqli_query($vConexion, $SQL);
-        
+
         //3) el resultado deberá organizarse en una matriz, entonces lo recorro
         $i=0;
         while ($data = mysqli_fetch_array($rs)) {
-            $Listado[$i]['ID'] = $data['IdTransporte'];
-            $Listado[$i]['Modelo'] = $data['Marca'] .' - '. $data['Modelo'] . ' - '.$data['Patente'];
-            $i++;
+
+
+            $fecha = $data['fechaviaje'];
+
+            // // Establece la configuración regional a español
+            // $formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+            // $formatter->setPattern('EEEE, d ' . "'de'" . ' MMMM ' . "'de'" . ' yyyy');            
+            // // Formatea la fecha en español
+            // $fechaEnEspanol = $formatter->format($fecha);
+
+            $fechaEnEspanol = $fecha;
+
+            $montochoferConporcentaje = $data['montochofer'] . " (". $data['porcentajechofer'] . "%)";
+            $Listado[$i]['numero'] = strval($i+1);            
+            $Listado[$i]['fechaviaje'] = $fechaEnEspanol;
+            $Listado[$i]['destino'] = $data['destino'];
+            $Listado[$i]['camion'] = $data['camion'];
+            $Listado[$i]['chofer'] = $data['chofer'];
+            $Listado[$i]['costoviaje'] = $data['costoviaje'];
+            $Listado[$i]['montochoferConporcentaje'] = $montochoferConporcentaje;            
+            $Listado[$i]['montochoferSinporcentaje'] = $data['montochofer'];
+            $Listado[$i]['porcentajechofer'] = $data['porcentajechofer'];     
+            $i++;       
         }
 
     //devuelvo el listado generado en el array $Listado. (Podra salir vacio o con datos)..

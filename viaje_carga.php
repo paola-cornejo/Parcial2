@@ -310,7 +310,7 @@ if (!empty($_POST['BotonRegistrar'])) {
 
                     <div class="col-12">
                         <label for="costo" class="form-label">Costo (*)</label>
-                        <input maxlength="7" type="text" class="form-control" id="costo" name="Costo" value="<?php 
+                        <input maxlength="8" type="text" class="form-control" id="costo" name="Costo" value="<?php 
                           //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                           echo !empty($_POST['Costo']) ? $_POST['Costo'] : ''; ?>"> 
                     </div>

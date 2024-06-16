@@ -23,16 +23,20 @@ function validacion_registro_viaje() {
         $Mensaje.='Debes seleccionar un Destino. <br />';
     }    
      
-    //reemplazo la coma por el punto porque el costo es tipo decimal y lleva punto
+    //reemplazo la coma por el punto porque el costo es tipo decimal y se usa el punto
     $_POST['Costo'] = str_replace(',', '.', $_POST['Costo']);
-
-    //reemplazar coma por punto
-    if ( !is_numeric($_POST['Costo'])) {
-        $Mensaje.='Debes ingresar el Costo. <br />';
+    if (strlen($_POST['Costo']) > 8 || !is_numeric($_POST['Costo'])) {
+        $Mensaje.='Debes ingresar el costo de 8 dígitos como maximo. <br />';
     }
         
-    if (!is_numeric($_POST['PorcentajeChofer'])) {
-        $Mensaje.='Debes ingresar el Porcentaje. <br />';
+    if (!is_numeric($_POST['PorcentajeChofer'])  ) {
+        $Mensaje.='Debes ingresar el Porcentaje numérico del 0 al 100. <br />';
+    }
+    else
+    {
+        if ($_POST['PorcentajeChofer'] > 100 ) {
+            $Mensaje.='El Porcentaje debe ser menor o igual a 100. <br />';
+        }
     }
 
         

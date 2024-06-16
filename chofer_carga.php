@@ -95,7 +95,7 @@ if (!empty($_POST['BotonRegistrar'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-person"></i>
                 <span>Mi perfil</span>
               </a>
@@ -105,7 +105,7 @@ if (!empty($_POST['BotonRegistrar'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-gear"></i>
                 <span>Configuraciones</span>
               </a>
@@ -238,33 +238,33 @@ if (!empty($_POST['BotonRegistrar'])) {
                 
                 <div class="col-12">                
                     <label for="Apellido" class="form-label">Apellido (*)</label>
-                    <input type="text" class="form-control" id="apellido" name="Apellido" value="<?php 
+                    <input maxlength="10" type="text" class="form-control" id="apellido" name="Apellido" value="<?php 
                     //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                     echo !empty($_POST['Apellido']) ? $_POST['Apellido'] : ''; ?>"> 
                 </div>
 
                 <div class="col-12">
                     <label for="Nombre" class="form-label">Nombre (*)</label>
-                    <input type="text" class="form-control" id="nombre" name="Nombre" value="<?php 
+                    <input maxlength="10" type="text" class="form-control" id="nombre" name="Nombre" value="<?php 
                     //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                     echo !empty($_POST['Nombre']) ? $_POST['Nombre'] : ''; ?>"> 
                 </div>
                 
                 <div class="col-12">
                     <label for="dni" class="form-label">DNI (*)</label>
-                    <input type="text" class="form-control" id="dni" name="DNI" value="<?php 
+                    <input maxlength="8" type="text" class="form-control" id="dni" name="DNI"  value="<?php 
                     //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                     echo !empty($_POST['DNI']) ? $_POST['DNI'] : ''; ?>">
                 </div>
                 <div class="col-12">
                     <label for="user" class="form-label">Usuario</label>
-                    <input type="text" class="form-control" id="user" name="Usuario" value="<?php 
+                    <input maxlength="10" type="text" class="form-control" id="user" name="Usuario" value="<?php 
                     //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                     echo !empty($_POST['Usuario']) ? $_POST['Usuario'] : ''; ?>">
                 </div>
                 <div class="col-12">
                     <label for="pass" class="form-label">Clave</label>
-                    <input type="text" class="form-control" id="pass" name="Clave" alue="<?php 
+                    <input maxlength="10" type="text" class="form-control" id="pass" name="Clave" alue="<?php 
                     //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                     echo !empty($_POST['Clave']) ? $_POST['Clave'] : ''; ?>">
                 </div>

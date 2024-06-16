@@ -1,5 +1,12 @@
+<?php 
 
-<?php ?>
+session_start();
+
+require_once 'funciones/habilitar_chofer_carga.php';
+require_once 'funciones/habilitar_viajes_carga.php';
+require_once 'funciones/habilitar_transporte_carga.php';
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,11 +49,12 @@
 </head>
 <body>
 
+ 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
@@ -60,20 +68,20 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/bellota.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Sue Palacios</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido']   ?> </span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Sue Palacios</h6>
-              <span>Administrador</span>
+              <h6><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido'] ;   ?></h6>              
+              <span><?php   echo $_SESSION['NOMBRE_NIVEL']  ;  ?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-person"></i>
                 <span>Mi perfil</span>
               </a>
@@ -83,7 +91,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-gear"></i>
                 <span>Configuraciones</span>
               </a>
@@ -96,7 +104,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="login.html">
+              <a class="dropdown-item d-flex align-items-center" href="login.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesion</span>
               </a>
@@ -115,7 +123,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
+        <a class="nav-link collapsed" href="index.php">
           <i class="bi bi-grid"></i>
           <span>Panel</span>
         </a>
@@ -126,34 +134,44 @@
             <i class="bi bi-truck"></i><span>Transporte</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
+        <?php if (habilitar_transporte_carga()){ ?>  
+        <li>
             <a href="camion_carga.php" class="active">
-            <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo transporte</span>
+            
+              <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo transporte</span>
+            
             </a>
           </li>
+          <?php } ?>    
+
+          <?php if (habilitar_chofer_carga()){ ?>
           <li>
-            <a href="chofer_carga.html" class="active">
+            <a href="chofer_carga.php" class="active">
             <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo chofer</span>
             </a>
           </li>
-
+          <?php } ?>
        
 
         </ul>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-globe2"></i><span>Viajes</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">            
+          <i class="bi bi-globe2"></i><span>Viajes</span><i class="bi bi-chevron-down ms-auto"></i>            
         </a>
         <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="viaje_carga.html" class="active">
-            <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo</span>
+          
+        <?php if (habilitar_viajes_carga()){ ?>
+        <li>
+            <a href="viaje_carga.php" class="active">
+            
+                <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo</span>
+            <?php } ?>
             </a>
           </li>
           <li>
-            <a href="viajes_listado.html" class="active">
+            <a href="viajes_listado.php" class="active">
             <i class="bi bi-layout-text-window-reverse"></i><span>Listado de viajes</span>
             </a>
           </li>
@@ -174,7 +192,7 @@
   <h1>Bienvenid@s!!</h1>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item active"><a href="index.php">Home</a></li>
     </ol>
   </nav>
 </div><!-- End Page Title -->

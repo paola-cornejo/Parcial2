@@ -7,6 +7,9 @@ $MiConexion = ConexionBD();
 
 require_once 'funciones/Listar_Viajes.php';
 require_once 'funciones/ObtenerEstilo.php';
+require_once 'funciones/habilitar_chofer_carga.php';
+require_once 'funciones/habilitar_viajes_carga.php';
+require_once 'funciones/habilitar_transporte_carga.php';
 
 $ListadoViajes = Listar_Viajes($MiConexion);
 $CantidadViajes = count($ListadoViajes);
@@ -77,8 +80,8 @@ $CantidadViajes = count($ListadoViajes);
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Sue Palacios</h6>
-              <span>Administrador</span>
+            <h6><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido'] ;   ?></h6>              
+            <span><?php   echo $_SESSION['NOMBRE_NIVEL']  ;  ?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -138,17 +141,23 @@ $CantidadViajes = count($ListadoViajes);
             <i class="bi bi-truck"></i><span>Transporte</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
+        
+        
+        <?php if (habilitar_transporte_carga()){ ?>    
+        <li>
             <a href="camion_carga.php" class="active">
             <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo transporte</span>
             </a>
           </li>
+          <?php } ?>    
+
+          <?php if (habilitar_chofer_carga()){ ?>
           <li>
             <a href="chofer_carga.php" class="active">
             <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo chofer</span>
             </a>
           </li>
-
+          <?php } ?>
        
 
         </ul>
@@ -159,11 +168,13 @@ $CantidadViajes = count($ListadoViajes);
             <i class="bi bi-globe2"></i><span>Viajes</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
+        <?php if (habilitar_viajes_carga()){ ?>  
+        <li>
             <a href="viaje_carga.php" class="active">
             <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo</span>
             </a>
           </li>
+          <?php } ?>
           <li>
             <a href="viajes_listado.php" class="active">
             <i class="bi bi-layout-text-window-reverse"></i><span>Listado de viajes</span>
@@ -249,14 +260,8 @@ $CantidadViajes = count($ListadoViajes);
                             data-bs-placement="left" 
                             data-bs-original-title="Viaje realizado">
 
-                                <th scope="row"><?php echo $i+1?></th>                                
-                                 <td><?php 
-                                  $formatter = new IntlDateFormatter($locale, IntlDateFormatter::FULL, IntlDateFormatter::NONE);
-                                  $formatter->setPattern('EEEE, d ' . "'de'" . ' MMMM ' . "'de'" . ' yyyy');
-                                  $fechaEnEspanol = $formatter->format($ListadoViajes[$i]['fechaviaje']);
-                                  echo $fechaEnEspanol
-                                         ?></td>
-                                
+                                <th scope="row"><?php echo $i+1?></th>                               
+                                <td><?php echo $ListadoViajes[$i]['fechaviajeMostrar']; ?></td>
                                 <td><?php echo $ListadoViajes[$i]['destino']; ?></td>
                                 <td><?php echo $ListadoViajes[$i]['camion']; ?></td>
                                 <td><?php echo $ListadoViajes[$i]['chofer']; ?></td>

@@ -18,6 +18,7 @@ $Estilo='warning';
 if (!empty($_POST['BotonRegistrar'])) {
   //estoy en condiciones de poder validar los datos
   $Mensaje=validacion_registro_transporte();  
+
   if (empty($Mensaje)) {   
       if (InsertarTransporte($MiConexion) != false) {
         $Mensaje = 'Se ha registrado correctamente.';
@@ -27,7 +28,6 @@ if (!empty($_POST['BotonRegistrar'])) {
       }
 }
 
-echo "paso 6";
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +82,7 @@ echo "paso 6";
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
- 
+    
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
@@ -94,15 +94,15 @@ echo "paso 6";
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Sue Palacios</h6>
-              <span>Administrador</span>
+            <h6><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido'] ;   ?></h6>              
+            <span><?php   echo $_SESSION['NOMBRE_NIVEL']  ;  ?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-person"></i>
                 <span>Mi perfil</span>
               </a>
@@ -112,7 +112,7 @@ echo "paso 6";
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-gear"></i>
                 <span>Configuraciones</span>
               </a>
@@ -273,7 +273,9 @@ echo "paso 6";
                     
 
                     <div class="text-center">                        
-                        <button type="submit" class="btn btn-primary" value="Registrar" name="BotonRegistrar" >Registrar</button>
+                        <button type="submit" class="btn btn-primary" value="Registrar" 
+                        name="BotonRegistrar" >Registrar</button>
+
                         <button type="reset" class="btn btn-secondary">Limpiar Campos</button>
                         <a href="index.php" class="text-primary fw-bold">Volver al index</a>
                     </div>

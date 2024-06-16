@@ -20,7 +20,7 @@ function validacion_registro_chofer() {
     
     
     //con esto aseguramos que limpiamos espacios y limpiamos de caracteres de codigo ingresados
-    foreach($_POST as $Id=>$Mensaje){
+    foreach($_POST as $Id=>$Valor){
         $_POST[$Id] = trim($_POST[$Id]);
         $_POST[$Id] = strip_tags($_POST[$Id]);
     }

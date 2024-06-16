@@ -27,14 +27,15 @@ $SQL="SELECT U.Id, U.Nombre, U.Apellido, U.IdNivel, U.Imagen, U.Activo, N.Denomi
         $Usuario['ACTIVO'] = $data['Activo'];
         $Usuario['IDNIVEL'] = $data['IdNivel'];
         $Usuario['IMAGEN'] = $data['Imagen'];  
-        
+        $Usuario['NOMBRE_NIVEL'] = $data['NombreNivel'];       
+
         // if (empty( $data['Imagen'])) {
         //     $data['Imagen'] = 'user.png'; 
         // }
         // $Usuario['IMG'] = $data['Imagen'];
         // $Usuario['ACTIVO'] = $data['Activo'];
         //agregados        
-        // $Usuario['NOMBRE_NIVEL'] = $data['NombreNivel'];
+        
     }
     return $Usuario;
 }

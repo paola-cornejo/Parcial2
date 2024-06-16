@@ -111,7 +111,7 @@ if (!empty($_POST['BotonRegistrar'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-person"></i>
                 <span>Mi perfil</span>
               </a>
@@ -121,7 +121,7 @@ if (!empty($_POST['BotonRegistrar'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
                 <i class="bi bi-gear"></i>
                 <span>Configuraciones</span>
               </a>
@@ -303,13 +303,13 @@ if (!empty($_POST['BotonRegistrar'])) {
 
                     <div class="col-12">
                         <label for="costo" class="form-label">Costo (*)</label>
-                        <input type="text" class="form-control" id="costo" name="Costo" value="<?php 
+                        <input maxlength="7" type="text" class="form-control" id="costo" name="Costo" value="<?php 
                           //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                           echo !empty($_POST['Costo']) ? $_POST['Costo'] : ''; ?>"> 
                     </div>
                     <div class="col-12">
                         <label for="porc" class="form-label">Porcentaje chofer (*)</label>
-                        <input type="text" class="form-control" id="porc" name = "PorcentajeChofer" value="<?php 
+                        <input maxlength="3" type="text" class="form-control" id="porc" name = "PorcentajeChofer" value="<?php 
                           //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                           echo !empty($_POST['PorcentajeChofer']) ? $_POST['PorcentajeChofer'] : '';?>"> 
                     </div>                    

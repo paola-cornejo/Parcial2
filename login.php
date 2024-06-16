@@ -1,18 +1,15 @@
 <?php 
 session_start();
-//print_r($_SESSION);
+
 require_once 'funciones/conexion.php';
 require_once 'funciones/DatosLogin.php';
 require_once 'funciones/validacion_login_usuario.php';
 
 $MiConexion = ConexionBD();
-
-
 $Mensaje='';
 
  if (!empty($_POST['BotonLogin'])) 
- {    
-  
+ {      
 
     $MensajeUsuario = validacion_login_usuario($_POST['usuario'], $_POST['password']);
 
@@ -25,9 +22,11 @@ $Mensaje='';
       {
   
          //generar los valores del usuario (esto va a venir de mi BD)
-          // $_SESSION['Usuario_Nombre']     =   $UsuarioLogueado['NOMBRE'];
-          // $_SESSION['Usuario_Apellido']   =   $UsuarioLogueado['APELLIDO'];
+          $_SESSION['Usuario_Nombre']     =   $UsuarioLogueado['NOMBRE'];
+          $_SESSION['Usuario_Apellido']   =   $UsuarioLogueado['APELLIDO'];
           $_SESSION['Usuario_Nivel']      =   $UsuarioLogueado['IDNIVEL'];
+          $_SESSION['NOMBRE_NIVEL']      =   $UsuarioLogueado['NOMBRE_NIVEL'];
+
           // $_SESSION['Usuario_Img']        =   $UsuarioLogueado['IMAGEN'];    
           // $_SESSION['Usuario_Id']         =   $UsuarioLogueado['ID'];
   
@@ -94,7 +93,7 @@ $Mensaje='';
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                <a href="index.php" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
                   <span class="d-none d-lg-block">Panel de Administración</span>
                 </a>
@@ -137,7 +136,8 @@ $Mensaje='';
 
                 
                     <div class="col-12">                                 
-                      <button class="btn btn-primary w-100" type="submit" name="BotonLogin" value="Login">Login</button>
+                      <button class="btn btn-primary w-100" type="submit" 
+                      name="BotonLogin" value="Login">Login</button>
                     </div>
                  </form>
                                     

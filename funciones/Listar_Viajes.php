@@ -5,13 +5,14 @@ function Listar_Viajes($vConexion) {
 
       //1) genero la consulta que deseo
         // $SQL = "SELECT IdMarca as Id, Denominacion as Nombre FROM marcas ORDER BY Denominacion";
-        $SQL = "SELECT v.fechapautada as fechaviaje , 
+        $SQL = "SELECT v.fechapautada AS fechaviaje,
+                DATE_FORMAT(v.fechapautada , '%d/%m/%Y') AS fechaviajeMostrar,
                 d.denominacion as destino
                 , concat(m.denominacion , ' - ' , t.modelo , ' - ', t.patente) as camion,
                 concat(u.apellido, ', ', u.nombre) as chofer,
                 v.costo as costoviaje,                
                 (v.costo * v.porcentajechofer) / 100 as montochofer,
-                v.porcentajechofer 
+                v.porcentajechofer                 
                 FROM viajes v
                 INNER JOIN destinos d on d.iddestino = v.iddestino
                 INNER JOIN transportes t on t.idtransporte = v.idtransporte
@@ -40,7 +41,8 @@ function Listar_Viajes($vConexion) {
 
             $montochoferConporcentaje = $data['montochofer'] . " (". $data['porcentajechofer'] . "%)";
             $Listado[$i]['numero'] = strval($i+1);            
-            $Listado[$i]['fechaviaje'] = $fechaEnEspanol;
+            $Listado[$i]['fechaviaje'] = $data['fechaviaje'];
+            $Listado[$i]['fechaviajeMostrar'] = $data['fechaviajeMostrar'];
             $Listado[$i]['destino'] = $data['destino'];
             $Listado[$i]['camion'] = $data['camion'];
             $Listado[$i]['chofer'] = $data['chofer'];

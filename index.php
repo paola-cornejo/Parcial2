@@ -67,7 +67,8 @@ require_once 'funciones/habilitar_transporte_carga.php';
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/bellota.jpg" alt="Profile" class="rounded-circle">
+            <!-- <img src="assets/img/bellota.jpg" alt="Profile" class="rounded-circle"> -->
+             <img src='assets/img/<?php echo $_SESSION['Usuario_Imagen']?>'  alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido']   ?> </span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -104,7 +105,7 @@ require_once 'funciones/habilitar_transporte_carga.php';
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="login.php">
+              <a class="dropdown-item d-flex align-items-center" href="cerrarsesion.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesion</span>
               </a>

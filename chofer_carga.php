@@ -9,14 +9,17 @@ require_once 'funciones/validacion_registro_chofer.php';
 
 $Mensaje='';
 $Estilo='warning';
+$EstiloIcono='bi-exclamation-triangle';
 if (!empty($_POST['BotonRegistrar'])) {
   //estoy en condiciones de poder validar los datos
   $Mensaje=validacion_registro_chofer();  
   if (empty($Mensaje)) {   
       if (InsertarChofer($MiConexion) != false) {
+
         $Mensaje = 'Se ha registrado correctamente.';
         $_POST = array(); 
         $Estilo = 'success'; 
+        $EstiloIcono='bi-check-circle';
        }         
       }
 }
@@ -81,14 +84,15 @@ if (!empty($_POST['BotonRegistrar'])) {
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/bellota.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Sue Palacios</span>
+          <img src='assets/img/<?php echo $_SESSION['Usuario_Imagen']?>'  alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido']   ?> </span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Sue Palacios</h6>
-              <span>Administrador</span>
+            <h6><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido'] ;   ?></h6>              
+              <span><?php   echo $_SESSION['NOMBRE_NIVEL']  ;  ?></span>
+
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -118,7 +122,7 @@ if (!empty($_POST['BotonRegistrar'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="login.php">
+            <a class="dropdown-item d-flex align-items-center" href="cerrarsesion.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesion</span>
               </a>
@@ -209,9 +213,12 @@ if (!empty($_POST['BotonRegistrar'])) {
             <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Ingresa los datos</h5>
+                
                 <?php if (!empty($Mensaje)) { ?>
                     <div class="alert alert-<?php echo $Estilo; ?> alert-dismissable">
-                      <?php echo $Mensaje; ?>
+                    <i class="bi <?php echo $EstiloIcono ?> me-1"></i>                            
+                     <?php if ( $Estilo != 'success') echo 'Atención verifique los siguientes campos: </br>' ?>
+                      <?php echo $Mensaje; ?>                      
                     </div>
                   <?php } ?>
 

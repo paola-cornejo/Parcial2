@@ -2,14 +2,10 @@
 
 function validacion_registro_viaje() {
     $Mensaje='';
-        
-    //if (  ($_POST['Marca']) == "Selecciona una opción" ) {
-
     
     if (!ctype_digit($_SESSION['Usuario_Id'])) {
         $Mensaje.='No se encontro la sesion del usuario. <br />';
-    }
-    
+    }    
 
     if (!ctype_digit($_POST['Chofer'])) {
         $Mensaje.='Debes seleccionar el Chofer. <br />';
@@ -27,6 +23,10 @@ function validacion_registro_viaje() {
         $Mensaje.='Debes seleccionar un Destino. <br />';
     }    
      
+    //reemplazo la coma por el punto porque el costo es tipo decimal y lleva punto
+    $_POST['Costo'] = str_replace(',', '.', $_POST['Costo']);
+
+    //reemplazar coma por punto
     if ( !is_numeric($_POST['Costo'])) {
         $Mensaje.='Debes ingresar el Costo. <br />';
     }

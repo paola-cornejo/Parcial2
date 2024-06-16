@@ -23,6 +23,8 @@ $cantidadDestino = count($ListarDestino);
 
 $Mensaje='';
 $Estilo='warning';
+$EstiloIcono='bi-exclamation-triangle';
+
 if (!empty($_POST['BotonRegistrar'])) {  
   //estoy en condiciones de poder validar los datos
   $Mensaje=validacion_registro_viaje();   
@@ -31,6 +33,7 @@ if (!empty($_POST['BotonRegistrar'])) {
         $Mensaje = 'Se ha registrado correctamente.';
         $_POST = array(); 
         $Estilo = 'success'; 
+        $EstiloIcono='bi-check-circle';
        }         
       }
 }
@@ -87,24 +90,20 @@ if (!empty($_POST['BotonRegistrar'])) {
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <?php
-      echo "Sesion" . $_SESSION['Usuario_Id'];
-    ?>
-
-
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/bellota.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Sue Palacios</span>
+          <img src='assets/img/<?php echo $_SESSION['Usuario_Imagen']?>'  alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido']   ?> </span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Sue Palacios</h6>
-              <span>Administrador</span>
+            <h6><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido'] ;   ?></h6>              
+              <span><?php   echo $_SESSION['NOMBRE_NIVEL']  ;  ?></span>
+
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -134,7 +133,7 @@ if (!empty($_POST['BotonRegistrar'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="login.php">
+            <a class="dropdown-item d-flex align-items-center" href="cerrarsesion.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesion</span>
               </a>
@@ -217,15 +216,20 @@ if (!empty($_POST['BotonRegistrar'])) {
             <div class="card-body">
                 <h5 class="card-title">Ingresa los datos</h5>
 
+                <?php if (!empty($Mensaje)) { ?>
+                    <div class="alert alert-<?php echo $Estilo; ?> alert-dismissable">
+                    <i class="bi <?php echo $EstiloIcono ?> me-1"></i>                            
+                     <?php if ( $Estilo != 'success') echo 'Atención verifique los siguientes campos: </br>' ?>
+                      <?php echo $Mensaje; ?>                      
+                    </div>
+                  <?php } ?>
+
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
                     <i class="bi bi-info-circle me-1"></i>
                     Los campos indicados con (*) son requeridos
                 </div>
-                <?php if (!empty($Mensaje)) { ?>
-                  <div class="alert alert-<?php echo $Estilo; ?> alert-dismissable">
-                    <?php echo $Mensaje; ?>
-                  </div>
-                <?php } ?>
+
+    
 <!--
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <i class="bi bi-exclamation-triangle me-1"></i>
@@ -278,7 +282,10 @@ if (!empty($_POST['BotonRegistrar'])) {
                     
                     <div class="col-12">
                         <label for="fecha" class="form-label">Fecha programada (*)</label>
-                        <input type="date" class="form-control" id="fecha" name = "FechaPautada">
+                        <input type="date" class="form-control" id="fecha" name = "FechaPautada" 
+                        value="<?php 
+                          //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
+                          echo !empty($_POST['FechaPautada']) ? $_POST['FechaPautada'] : ''; ?>">
                     </div>
 
                     <div class="col-12">

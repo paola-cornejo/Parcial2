@@ -26,9 +26,8 @@ $Mensaje='';
           $_SESSION['Usuario_Apellido']   =   $UsuarioLogueado['APELLIDO'];
           $_SESSION['Usuario_Nivel']      =   $UsuarioLogueado['IDNIVEL'];
           $_SESSION['NOMBRE_NIVEL']      =   $UsuarioLogueado['NOMBRE_NIVEL'];
-
-          // $_SESSION['Usuario_Img']        =   $UsuarioLogueado['IMAGEN'];    
-          // $_SESSION['Usuario_Id']         =   $UsuarioLogueado['ID'];
+          $_SESSION['Usuario_Imagen']      =   $UsuarioLogueado['IMAGEN'];          
+          $_SESSION['Usuario_Id']         =   $UsuarioLogueado['ID'];
   
           if ($UsuarioLogueado['ACTIVO']==0) {
               $Mensaje ='Ud. no se encuentra activo en el sistema.';

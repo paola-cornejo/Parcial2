@@ -15,7 +15,7 @@ function InsertarChofer($conexion) {
 
     // Construir la consulta SQL con los datos
     $sql = "INSERT INTO usuarios (Apellido, Nombre, DNI, Usuario, Clave, Activo, IdNivel, FechaCreacion, Imagen) 
-    VALUES ('$Apellido', '$Nombre ', '$DNI', '$Usuario', '$Clave', 1, 3, NOW(), null)";
+    VALUES ('$Apellido', '$Nombre ', '$DNI', '$Usuario', MD5('$Clave'), 1, 3, NOW(), 'logo.png')";
 
     // Ejecutar la consulta utilizando mysqli_query
     if (mysqli_query($conexion, $sql)) {

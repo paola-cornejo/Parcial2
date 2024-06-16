@@ -120,7 +120,7 @@ $Mensaje='';
                         <label>Usuario</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                <input class="form-control" id="yourUsername" type="text" name="usuario" value="<?php 
+                                <input class="form-control" id="yourUsername" type="email" name="usuario" value="<?php 
                                 //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                                 echo !empty($_POST['usuario']) ? $_POST['usuario'] : ''; ?>">                                 
                                 <div class="invalid-feedback">Ingresa tu usuario.</div>

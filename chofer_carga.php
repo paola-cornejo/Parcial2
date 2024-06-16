@@ -265,7 +265,7 @@ if (!empty($_POST['BotonRegistrar'])) {
                 </div>
                 <div class="col-12">
                     <label for="user" class="form-label">Usuario</label>
-                    <input maxlength="10" type="email" class="form-control" id="user" name="Usuario" value="<?php 
+                    <input maxlength="30" type="email" class="form-control" id="user" name="Usuario" value="<?php 
                     //tiene algun valor el Usuario ? lo muestra//sino, no muestra nada
                     echo !empty($_POST['Usuario']) ? $_POST['Usuario'] : ''; ?>">
                 </div>

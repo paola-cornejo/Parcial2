@@ -10,7 +10,7 @@ function DatosLogin($vUsuario, $vClave, $vConexion){
 
 $SQL="SELECT U.Id, U.Nombre, U.Apellido, U.IdNivel, U.Imagen, U.Activo, N.Denominacion NombreNivel, U.DNI, U.Usuario, U.Clave
      FROM usuarios U, niveles_usuarios N
-     WHERE U.Usuario ='$vUsuario' AND Clave = '$vClave'
+     WHERE U.Usuario ='$vUsuario' AND Clave = MD5('$vClave')
      AND U.IdNivel = N.IdNivel ";
 
     $rs = mysqli_query($vConexion, $SQL);

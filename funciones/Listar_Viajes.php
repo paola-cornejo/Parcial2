@@ -11,7 +11,7 @@ function Listar_Viajes($vConexion) {
                 , concat(m.denominacion , ' - ' , t.modelo , ' - ', t.patente) as camion,
                 concat(u.apellido, ', ', u.nombre) as chofer,
                 v.costo as costoviaje,                
-                (v.costo * v.porcentajechofer) / 100 as montochofer,
+                round((v.costo * v.porcentajechofer) / 100,2) as montochofer,
                 v.porcentajechofer                 
                 FROM viajes v
                 INNER JOIN destinos d on d.iddestino = v.iddestino

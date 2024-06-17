@@ -3,8 +3,7 @@ function ListarChofer($Conexion) {
 
     $Listado=array();
 
-      //1) genero la consulta que deseo
-        // $SQL = "SELECT IdMarca as Id, Denominacion as Nombre FROM marcas ORDER BY Denominacion";
+      //1) genero la consulta que deseo        
         $SQL = "SELECT * FROM usuarios WHERE IdNivel = 3 ORDER BY nombre ASC;";
 
         //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs es el cto de resultados

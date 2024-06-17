@@ -4,7 +4,7 @@ function listarTransporte($vConexion) {
     $Listado=array();
 
       //1) genero la consulta que deseo
-        // $SQL = "SELECT IdMarca as Id, Denominacion as Nombre FROM marcas ORDER BY Denominacion";
+        
         $SQL = "SELECT t.*, m.Denominacion as Marca 
         FROM transportes t
         INNER join marcas m on m.IdMarca = t.IdMarca

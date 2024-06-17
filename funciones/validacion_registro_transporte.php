@@ -1,8 +1,6 @@
 <?php
 function validacion_registro_transporte() {
     $MensajeError='';
-    
-    //if (  ($_POST['Marca']) == "Selecciona una opción" ) {
 
     if ( !ctype_digit($_POST['Marca'])) {
         $MensajeError.='Debes seleccionar una marca. <br />';

@@ -1,10 +1,8 @@
 <?php
 function Listar_Viajes($vConexion) {
 
-    $Listado=array();
-
-      //1) genero la consulta que deseo
-        // $SQL = "SELECT IdMarca as Id, Denominacion as Nombre FROM marcas ORDER BY Denominacion";
+    $Listado=array();      
+        
         $SQL = "SELECT v.fechapautada AS fechaviaje,
                 DATE_FORMAT(v.fechapautada , '%d/%m/%Y') AS fechaviajeMostrar,
                 d.denominacion as destino
@@ -21,10 +19,9 @@ function Listar_Viajes($vConexion) {
                 ORDER BY v.fechapautada ASC, d.denominacion ASC
                 ;";                
 
-        //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs es el cto de resultados
+        
         $rs = mysqli_query($vConexion, $SQL);
-
-        //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+        
         $i=0;
         while ($data = mysqli_fetch_array($rs)) {
 
@@ -46,8 +43,7 @@ function Listar_Viajes($vConexion) {
             $Listado[$i]['porcentajechofer'] = $data['porcentajechofer'];     
             $i++;       
         }
-
-    //devuelvo el listado generado en el array $Listado. (Podra salir vacio o con datos)..
+    
     return $Listado;
 
 }

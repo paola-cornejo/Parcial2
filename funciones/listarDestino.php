@@ -3,8 +3,7 @@ function listarDestino($vConexion) {
 
     $Listado=array();
 
-      //1) genero la consulta que deseo
-        // $SQL = "SELECT IdMarca as Id, Denominacion as Nombre FROM marcas ORDER BY Denominacion";
+      //1) genero la consulta que deseo        
         $SQL = "SELECT *
         FROM destinos         
         ORDER BY Denominacion ASC;";

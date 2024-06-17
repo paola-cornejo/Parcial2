@@ -31,12 +31,6 @@ function Listar_Viajes($vConexion) {
 
             $fecha = $data['fechaviaje'];
 
-            // // Establece la configuración regional a español
-            // $formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
-            // $formatter->setPattern('EEEE, d ' . "'de'" . ' MMMM ' . "'de'" . ' yyyy');            
-            // // Formatea la fecha en español
-            // $fechaEnEspanol = $formatter->format($fecha);
-
             $fechaEnEspanol = $fecha;
 
             $montochoferConporcentaje = $data['montochofer'] . " (". $data['porcentajechofer'] . "%)";

@@ -8,16 +8,8 @@ function ObtenerEstilo($Fecha_viaje) {
     */
     
     /*esta funcion de PHP hace que al ejecutar este archivo, tome la hora de la ciudad mencionada */
-    date_default_timezone_set("America/Argentina/Cordoba");
-    //pueden usarla si lo desean en el trabajo para que calcule la fecha correctamente. 
-    //la copian al principio del archivo donde trabajen con la fecha. 
-    
-    //analicen estos procesos para saber como trabajar en lo pedido:
-    // $Fecha_viaje="2024-06-02"; //esto será el valor que venga de la BD, pongan la fecha que quieran probar
-    // $Fecha_viaje="2024-06-03"; //esto será el valor que venga de la BD, pongan la fecha que quieran probar
-    // $Fecha_viaje="2024-06-04"; //esto será el valor que venga de la BD, pongan la fecha que quieran probar
-    //$Fecha_viaje="2024-06-05"; //esto será el valor que venga de la BD, pongan la fecha que quieran probar
-    
+    date_default_timezone_set("America/Argentina/Cordoba");       
+   
     //defino la fecha de hoy
     $Fecha_actual = date("Y-m-d"); 
     

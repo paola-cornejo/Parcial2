@@ -58,137 +58,19 @@ $CantidadViajes = count($ListadoViajes);
 <body>
 
 
+<!-- ======= Header ======= -->
+<?php 
+  require_once 'headerParcial2.inc.php';
+  ?>
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="index.php" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
- 
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-        <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          <img src='assets/img/<?php echo $_SESSION['Usuario_Imagen']?>'  alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido']   ?> </span>
-          </a><!-- End Profile Iamge Icon -->
+ <!-- ======= Aside ======= -->
+  <?php 
+  require_once 'asideParcial2.inc.php';
+  ?>
+  <!-- ======= Aside ======= -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-            <h6><?php   echo $_SESSION['Usuario_Nombre'] . ' ' .$_SESSION['Usuario_Apellido'] ;   ?></h6>              
-            <span><?php   echo $_SESSION['NOMBRE_NIVEL']  ;  ?></span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
-                <i class="bi bi-person"></i>
-                <span>Mi perfil</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.php">
-                <i class="bi bi-gear"></i>
-                <span>Configuraciones</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-            <a class="dropdown-item d-flex align-items-center" href="cerrarsesion.php">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Cerrar sesion</span>
-              </a>
-            </li>
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php">
-          <i class="bi bi-grid"></i>
-          <span>Panel</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-truck"></i><span>Transporte</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-        
-        
-        <?php if (habilitar_transporte_carga()){ ?>    
-        <li>
-            <a href="camion_carga.php" class="active">
-            <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo transporte</span>
-            </a>
-          </li>
-          <?php } ?>    
-
-          <?php if (habilitar_chofer_carga()){ ?>
-          <li>
-            <a href="chofer_carga.php" class="active">
-            <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo chofer</span>
-            </a>
-          </li>
-          <?php } ?>
-       
-
-        </ul>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-globe2"></i><span>Viajes</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-        <?php if (habilitar_viajes_carga()){ ?>  
-        <li>
-            <a href="viaje_carga.php" class="active">
-            <i class="bi bi-file-earmark-plus"></i><span>Cargar nuevo</span>
-            </a>
-          </li>
-          <?php } ?>
-          <li>
-            <a href="viajes_listado.php" class="active">
-            <i class="bi bi-layout-text-window-reverse"></i><span>Listado de viajes</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-    
-
-    
-    </ul>
-
-  </aside><!-- End Sidebar-->
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -298,18 +180,10 @@ $CantidadViajes = count($ListadoViajes);
 
   
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
+   <?php 
+  require_once 'footerParcial2.inc.php';
+  ?>
+  <!-- ======= Footer ======= -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

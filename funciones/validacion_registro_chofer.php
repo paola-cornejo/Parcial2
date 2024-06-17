@@ -10,9 +10,7 @@ function validacion_registro_chofer() {
     }    
     if ( strlen($_POST['DNI']) < 7 || strlen($_POST['DNI']) >10) {
         $Mensaje.='Debes ingresar un DNI válido. <br />';
-    }
-
-    
+    }    
 
     if (strlen($_POST['Usuario']) > 0 || strlen($_POST['Clave']) > 0)
     {
@@ -21,8 +19,7 @@ function validacion_registro_chofer() {
         }
         if (strlen($_POST['Clave']) <5 ) {
             $Mensaje.='Debes ingresar la clave de al menos 5 caracteres. <br />';    
-        }   
-        
+        } 
     }
 
     //con esto aseguramos que limpiamos espacios y limpiamos de caracteres de codigo ingresados
@@ -30,10 +27,6 @@ function validacion_registro_chofer() {
         $_POST[$Id] = trim($_POST[$Id]);
         $_POST[$Id] = strip_tags($_POST[$Id]);
     }
-
-
     return $Mensaje;
-
 }
-
 ?>

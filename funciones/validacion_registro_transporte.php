@@ -8,7 +8,7 @@ function validacion_registro_transporte() {
         $MensajeError.='Debes seleccionar una marca. <br />';
     }
     
-    if (ctype_alnum($_POST['Modelo']) < 3) {
+    if (ctype_alnum($_POST['Modelo']) > 3) {
         $MensajeError.='Debes ingresar el modelo con al menos 3 caracteres. <br />';
     }
 
@@ -24,12 +24,8 @@ function validacion_registro_transporte() {
     foreach($_POST as $Id=>$Valor){
         $_POST[$Id] = trim($_POST[$Id]);
         $_POST[$Id] = strip_tags($_POST[$Id]);
-    }
-    
-    //echo " mensaje: " .$Mensaje;
+    }   
 
     return $MensajeError;
-
 }
-
 ?>

@@ -22,7 +22,5 @@ function validacion_login_usuario($vUsuario, $vClave){
     }
 
     return $MensajeUsuario;
-
 }
-
 ?>
